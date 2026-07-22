@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'APParattus | Launch faster on Vercel',
+  title: 'APParattus | Launch planning, without the spreadsheet',
   description:
-    'A polished starter experience for APParattus: strategy, launch operations, and product systems for teams that move fast.',
+    'Turn a raw idea into a sequenced release: milestones with owners and dates, risks tracked openly, and one shared view of where a launch actually stands.',
   metadataBase: new URL('https://app-arattus.vercel.app'),
   openGraph: {
     title: 'APParattus',
