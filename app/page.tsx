@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const features = [
   {
     title: 'Launch planning',
@@ -37,7 +39,7 @@ export default function Home() {
           <div className="navLinks">
             <a href="#features">Features</a>
             <a href="#process">Process</a>
-            <a href="#contact">Contact</a>
+            <Link href="/login">Sign in</Link>
           </div>
         </nav>
 
@@ -46,14 +48,14 @@ export default function Home() {
             <p className="eyebrow">Product launch systems</p>
             <h1 id="hero-title">Bring structure, speed, and polish to every app launch.</h1>
             <p className="lede">
-              APParattus is a Vercel-ready product site and operating layer for turning early ideas into a credible launch presence.
+              APParattus turns a raw idea into a sequenced release: milestones with owners and dates, risks tracked openly, and one shared view of where things actually stand.
             </p>
             <div className="actions" aria-label="Primary actions">
-              <a className="button primary" href="#contact">
+              <Link className="button primary" href="/signup">
                 Start a launch
-              </a>
+              </Link>
               <a className="button secondary" href="#features">
-                Explore the build
+                See how it works
               </a>
             </div>
           </div>
@@ -130,13 +132,11 @@ export default function Home() {
 
       <section id="contact" className="cta">
         <p className="eyebrow">Ready when you are</p>
-        <h2>Use this as the public starting point for APParattus.</h2>
-        <p>
-          Replace the copy, connect forms or analytics, and expand the product sections as your launch details firm up.
-        </p>
-        <a className="button primary" href="#top">
-          Review the launch surface
-        </a>
+        <h2>Plan your next launch in five minutes.</h2>
+        <p>Free to start. No credit card, no setup call — create an account and add your first milestone.</p>
+        <Link className="button primary" href="/signup">
+          Start a launch
+        </Link>
       </section>
     </main>
   );
