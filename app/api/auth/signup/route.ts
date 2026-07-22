@@ -18,18 +18,18 @@ export async function POST(request: Request) {
   const { email, password, displayName } = parsed.data;
 
   const sql = db();
-  const existing = await sql`select id from users where email = ${email}`;
+  const existing = (await sql`select id from users where email = ${email}`) as { id: string }[];
   if (existing.length > 0) {
     return NextResponse.json({ error: 'email_taken' }, { status: 409 });
   }
 
   const passwordHash = await hashPassword(password);
-  const [user] = await sql`
+  const inserted = (await sql`
     insert into users (email, password_hash, display_name)
     values (${email}, ${passwordHash}, ${displayName})
     returning id
-  `;
+  `) as { id: string }[];
 
-  await createSession(user.id as string);
+  await createSession(inserted[0].id);
   return NextResponse.json({ ok: true });
 }

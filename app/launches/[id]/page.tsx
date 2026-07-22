@@ -19,12 +19,15 @@ export default async function LaunchDetailPage({ params }: { params: Promise<{ i
   const { id } = await params;
 
   const sql = db();
-  const launchRows = await sql`select * from launches where id = ${id} and owner_id = ${userId}`;
-  const launch = launchRows[0] as any;
+  const launchRows = (await sql`select * from launches where id = ${id} and owner_id = ${userId}`) as Record<string, any>[];
+  const launch = launchRows[0];
   if (!launch) notFound();
 
-  const milestones = await sql`select * from milestones where launch_id = ${id} order by sort_order asc, created_at asc`;
-  const risks = await sql`select * from risks where launch_id = ${id} order by created_at desc`;
+  const milestones = (await sql`select * from milestones where launch_id = ${id} order by sort_order asc, created_at asc`) as Record<
+    string,
+    any
+  >[];
+  const risks = (await sql`select * from risks where launch_id = ${id} order by created_at desc`) as Record<string, any>[];
 
   const total = milestones.length;
   const done = milestones.filter((m: any) => m.status === 'done').length;

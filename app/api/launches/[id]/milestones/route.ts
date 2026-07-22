@@ -17,17 +17,19 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const { id: launchId } = await params;
 
   const sql = db();
-  const owned = await sql`select id from launches where id = ${launchId} and owner_id = ${userId}`;
+  const owned = (await sql`select id from launches where id = ${launchId} and owner_id = ${userId}`) as { id: string }[];
   if (owned.length === 0) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request', issues: parsed.error.issues }, { status: 400 });
 
-  const orderRows = await sql`select coalesce(max(sort_order), -1) + 1 as next_order from milestones where launch_id = ${launchId}`;
-  const nextOrder = orderRows[0].next_order as number;
+  const orderRows = (await sql`select coalesce(max(sort_order), -1) + 1 as next_order from milestones where launch_id = ${launchId}`) as {
+    next_order: number;
+  }[];
+  const nextOrder = orderRows[0].next_order;
 
-  const [milestone] = await sql`
+  const inserted = (await sql`
     insert into milestones (launch_id, title, description, owner_name, owner_email, due_date, sort_order)
     values (
       ${launchId},
@@ -39,6 +41,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       ${nextOrder}
     )
     returning *
-  `;
-  return NextResponse.json({ milestone }, { status: 201 });
+  `) as Record<string, any>[];
+  return NextResponse.json({ milestone: inserted[0] }, { status: 201 });
 }

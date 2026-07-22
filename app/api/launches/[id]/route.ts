@@ -13,7 +13,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   const { id } = await params;
 
   const sql = db();
-  const rows = await sql`select * from launches where id = ${id} and owner_id = ${userId}`;
+  const rows = (await sql`select * from launches where id = ${id} and owner_id = ${userId}`) as Record<string, any>[];
   const launch = rows[0];
   if (!launch) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
@@ -36,11 +36,11 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request', issues: parsed.error.issues }, { status: 400 });
 
   const sql = db();
-  const rows = await sql`
+  const rows = (await sql`
     update launches set status = ${parsed.data.status}, updated_at = now()
     where id = ${id} and owner_id = ${userId}
     returning *
-  `;
+  `) as Record<string, any>[];
   const launch = rows[0];
   if (!launch) return NextResponse.json({ error: 'not_found' }, { status: 404 });
   return NextResponse.json({ launch });

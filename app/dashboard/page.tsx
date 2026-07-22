@@ -28,7 +28,7 @@ export default async function DashboardPage() {
   if (!userId) redirect('/login');
 
   const sql = db();
-  const launches = await sql`
+  const launches = (await sql`
     select l.*,
       (select count(*) from milestones m where m.launch_id = l.id) as milestone_count,
       (select count(*) from milestones m where m.launch_id = l.id and m.status = 'done') as milestones_done,
@@ -36,7 +36,7 @@ export default async function DashboardPage() {
     from launches l
     where l.owner_id = ${userId}
     order by l.created_at desc
-  `;
+  `) as Record<string, any>[];
 
   return (
     <main className="appShell">

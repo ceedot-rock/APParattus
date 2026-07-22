@@ -11,8 +11,11 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request' }, { status: 400 });
 
   const sql = db();
-  const rows = await sql`select id, password_hash from users where email = ${parsed.data.email}`;
-  const user = rows[0] as { id: string; password_hash: string } | undefined;
+  const rows = (await sql`select id, password_hash from users where email = ${parsed.data.email}`) as {
+    id: string;
+    password_hash: string;
+  }[];
+  const user = rows[0];
   if (!user) return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
 
   const valid = await verifyPassword(parsed.data.password, user.password_hash);

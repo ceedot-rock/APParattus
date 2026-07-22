@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   }
 
   const sql = db();
-  const [launch] = await sql`
+  const inserted = (await sql`
     insert into launches (owner_id, name, summary, success_criteria, target_date)
     values (
       ${userId},
@@ -48,6 +48,6 @@ export async function POST(request: Request) {
       ${parsed.data.targetDate ?? null}
     )
     returning *
-  `;
-  return NextResponse.json({ launch }, { status: 201 });
+  `) as Record<string, any>[];
+  return NextResponse.json({ launch: inserted[0] }, { status: 201 });
 }

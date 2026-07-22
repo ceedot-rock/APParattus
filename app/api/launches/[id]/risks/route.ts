@@ -14,17 +14,17 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const { id: launchId } = await params;
 
   const sql = db();
-  const owned = await sql`select id from launches where id = ${launchId} and owner_id = ${userId}`;
+  const owned = (await sql`select id from launches where id = ${launchId} and owner_id = ${userId}`) as { id: string }[];
   if (owned.length === 0) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request', issues: parsed.error.issues }, { status: 400 });
 
-  const [risk] = await sql`
+  const inserted = (await sql`
     insert into risks (launch_id, description, severity)
     values (${launchId}, ${parsed.data.description}, ${parsed.data.severity})
     returning *
-  `;
-  return NextResponse.json({ risk }, { status: 201 });
+  `) as Record<string, any>[];
+  return NextResponse.json({ risk: inserted[0] }, { status: 201 });
 }

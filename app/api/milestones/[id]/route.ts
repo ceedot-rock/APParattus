@@ -15,12 +15,12 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request' }, { status: 400 });
 
   const sql = db();
-  const rows = await sql`
+  const rows = (await sql`
     update milestones m set status = ${parsed.data.status}, updated_at = now()
     from launches l
     where m.id = ${id} and m.launch_id = l.id and l.owner_id = ${userId}
     returning m.*
-  `;
+  `) as Record<string, any>[];
   const milestone = rows[0];
   if (!milestone) return NextResponse.json({ error: 'not_found' }, { status: 404 });
   return NextResponse.json({ milestone });
