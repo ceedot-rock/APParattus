@@ -408,3 +408,325 @@ h3 {
     padding: 58px 0;
   }
 }
+
+/* ============================================================
+   App shell — dashboard, launch detail, auth pages
+   ============================================================ */
+
+.authShell {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.authPanel {
+  width: min(420px, 100%);
+  padding: 36px;
+}
+
+.authTitle {
+  margin-bottom: 24px;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.04em;
+}
+
+.authForm {
+  display: grid;
+  gap: 16px;
+}
+
+.authSwitch {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.authSwitch a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.formField {
+  display: grid;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.formError {
+  margin: 0;
+  color: #ff9b9b;
+  font-size: 0.88rem;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(7, 10, 18, 0.55);
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.formPanel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 24px;
+}
+
+.appShell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 80px;
+}
+
+.appNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 32px;
+}
+
+.navLogout {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.navLogout:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.appHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.appTitle {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.05em;
+}
+
+.emptyState {
+  padding: 48px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.launchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.launchCard {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  cursor: pointer;
+  transition: transform 180ms ease;
+}
+
+.launchCard:hover {
+  transform: translateY(-3px);
+}
+
+.launchCardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.launchSummary {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.successCriteria {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.successCriteria strong {
+  color: var(--text);
+}
+
+.launchMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.riskBadge {
+  color: #ffb37a;
+  font-weight: 700;
+}
+
+.statusPill,
+.severityPill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.status-planning { background: rgba(138, 168, 255, 0.18); color: var(--accent-2); }
+.status-in_progress { background: rgba(136, 247, 210, 0.18); color: var(--accent); }
+.status-at_risk { background: rgba(255, 122, 122, 0.2); color: #ff9b9b; }
+.status-shipped { background: rgba(136, 247, 210, 0.3); color: var(--accent); }
+.status-archived { background: rgba(255, 255, 255, 0.1); color: var(--muted); }
+.status-not_started { background: rgba(255, 255, 255, 0.1); color: var(--muted); }
+.status-blocked { background: rgba(255, 122, 122, 0.2); color: #ff9b9b; }
+.status-done { background: rgba(136, 247, 210, 0.3); color: var(--accent); }
+.status-open { background: rgba(255, 122, 122, 0.2); color: #ff9b9b; }
+.status-mitigated { background: rgba(255, 197, 122, 0.2); color: #ffcf8a; }
+.status-closed { background: rgba(255, 255, 255, 0.1); color: var(--muted); }
+
+.statusSelect {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.severity-low { background: rgba(255, 255, 255, 0.1); color: var(--muted); }
+.severity-medium { background: rgba(255, 197, 122, 0.2); color: #ffcf8a; }
+.severity-high { background: rgba(255, 122, 122, 0.2); color: #ff9b9b; }
+
+.breadcrumb {
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.breadcrumb a {
+  color: var(--accent);
+}
+
+.launchDetailHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 28px;
+  flex-wrap: wrap;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sectionHead h3 {
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dataTable th {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dataTable td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.92rem;
+}
+
+.inlineForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(7, 10, 18, 0.4);
+}
+
+.inlineForm .input,
+.inlineForm .select {
+  width: auto;
+  flex: 1 1 160px;
+}
+
+@media (max-width: 640px) {
+  .launchDetailHead {
+    flex-direction: column;
+  }
+
+  .dataTable {
+    display: block;
+    overflow-x: auto;
+  }
+}
